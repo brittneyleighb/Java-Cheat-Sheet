@@ -10,7 +10,8 @@ This cheat sheet covers:
 - **Control Flow**: Conditional statements, loops, and program flow control
 - **Object-Oriented Programming**: Classes, objects, inheritance, polymorphism, encapsulation, and abstraction
 - **Collections**: ArrayList, HashMap, HashSet, and common operations
-- **Exception Handling**: Try-catch blocks and error management
+- **Exception Handling**: Try-catch blocks, common exception types, and error management
+- **File I/O Operations**: File handling, reading/writing files, and directory operations
 - **Input/Output**: Scanner, file operations, and formatted output
 - **String Operations**: Common string methods and manipulations
 - **Advanced Topics**: Interfaces, abstract classes, static vs instance concepts
@@ -31,8 +32,8 @@ This cheat sheet covers:
 - [Strings](java-cheat-sheet.md#string-operations)
 - [Control Structures](java-cheat-sheet.md#conditional-statements)
 - [Arrays](java-cheat-sheet.md#arrays)
-- [Exception Handling](java-cheat-sheet.md#exception-handling)
-- [Object-Oriented Programming](java-cheat-sheet.md#object-oriented-programming)
+- [File I/O Operations](java-cheat-sheet.md#file-io-operations)
+- [Common Exception Types](java-cheat-sheet.md#common-exception-types)
 - [Collections](java-cheat-sheet.md#collections-framework-basics)
 - [Packages & Imports](java-cheat-sheet.md#packages-and-imports)
 
@@ -121,12 +122,13 @@ This expanded version builds upon the original cheat sheet with significant addi
 
 ### 🆕 Major Additions
 - **Exception Handling**: Complete try-catch-finally blocks with multiple catch examples
+- **Common Exception Types**: Comprehensive coverage of RuntimeExceptions and checked exceptions with practical examples
+- **File I/O Operations**: Complete file handling including File class methods, modern Files/Paths API, and traditional BufferedReader/Writer approaches
 - **Input/Output Operations**: Scanner usage, formatted output with printf
 - **String Operations**: Comprehensive string methods and manipulation examples
 - **Collections Framework**: ArrayList, HashMap, HashSet with practical examples
 - **Enhanced Type Conversion**: Parsing methods and explicit/implicit casting examples
 - **Packages & Imports**: Package declarations, import statements, and static imports
-- **File Operations**: Basic file reading/writing with modern Java APIs
 - **Date/Time Handling**: Java 8+ LocalDate and LocalDateTime examples
 - **Constructor Chaining**: Multiple constructor examples and best practices
 - **Method Visibility**: Public, private, protected method examples
@@ -144,8 +146,8 @@ This expanded version builds upon the original cheat sheet with significant addi
 
 ### 📊 Size Comparison
 - **Original**: ~200 lines covering basic syntax
-- **Expanded**: ~500+ lines with comprehensive coverage
-- **New Sections**: 8 major new topic areas
+- **Expanded**: ~600+ lines with comprehensive coverage
+- **New Sections**: 10 major new topic areas
 - **Enhanced Sections**: All original sections significantly expanded
 
 ### 🎯 Maintained from Original
