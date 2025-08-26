@@ -125,9 +125,9 @@ String[] parts = str.split(" ");            // ["Hello", "World"]
 String trimmed = "  Hello  ".trim();        // "Hello"
 
 // String comparison
-str.equals("Hello World");        // true
-str.equalsIgnoreCase("HELLO");    // false
-str.compareTo("Hello World");     // 0
+str.equals("Hello World");           // true
+str.equalsIgnoreCase("hello world"); // true
+str.compareTo("Hello World");        // 0
 ```
 
 ## Type Conversion & Parsing
@@ -284,7 +284,9 @@ int length = numbers.length; // Get array length
 int[][] matrix = new int[3][4];          // 3x4 matrix
 int[][] grid = {{1, 2}, {3, 4}, {5, 6}};
 
-// Array operations
+// Array operations (import java.util.Arrays; required)
+import java.util.Arrays;
+
 int[] original = {1, 2, 3};
 int[] copy = Arrays.copyOf(original, original.length);
 Arrays.sort(numbers);                    // Sort array
@@ -431,6 +433,25 @@ public class Dog extends Animal {
     
     public void wagTail() {
         System.out.println(name + " wags tail");
+    }
+}
+
+// Another child class
+public class Cat extends Animal {
+    private String breed;
+    
+    public Cat(String name, int age, String breed) {
+        super(name, age);
+        this.breed = breed;
+    }
+    
+    @Override
+    public void makeSound() {
+        System.out.println(name + " meows: Meow!");
+    }
+    
+    public void purr() {
+        System.out.println(name + " purrs contentedly");
     }
 }
 
