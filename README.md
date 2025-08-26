@@ -117,7 +117,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- **Original Cheat Sheet**: This work is based on and expands upon an original Java cheat sheet that provided the foundational structure and many core concepts
+- **Original Work**: This cheat sheet is based on and significantly expands upon the [Java CheatSheet](https://github.com/LeCoupa/awesome-cheatsheets/blob/master/languages/java.md) by [Julien Le Coupanec (LeCoupa)](https://github.com/LeCoupa) from the [Awesome CheatSheets](https://github.com/LeCoupa/awesome-cheatsheets) repository
 - Oracle for Java documentation and examples
 - The Java community for best practices and conventions
 - Contributors who help improve this resource
