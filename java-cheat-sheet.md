@@ -665,6 +665,157 @@ List<String> list = new ArrayList<>();
 double circumference = 2 * PI * radius; // Static import
 ```
 
+## File I/O Operations
+
+```java
+import java.io.*;
+import java.nio.file.*;
+import java.util.List;
+
+// File class - Working with files and directories
+File file = new File("example.txt");
+File directory = new File("myFolder");
+
+// File information methods
+boolean exists = file.exists();              // Check if file exists
+boolean isFile = file.isFile();             // Check if it's a file
+boolean isDirectory = file.isDirectory();    // Check if it's a directory
+String fileName = file.getName();           // Get file name
+String absolutePath = file.getAbsolutePath(); // Get full path
+long fileSize = file.length();              // Get file size in bytes
+long lastModified = file.lastModified();    // Last modification time
+
+// File operations
+boolean created = file.createNewFile();     // Create new file
+boolean deleted = file.delete();            // Delete file
+boolean renamed = file.renameTo(new File("newName.txt"));
+File[] files = directory.listFiles();       // List files in directory
+
+// Reading files (Modern approach - Java 8+)
+String content = Files.readString(Paths.get("file.txt"));
+List<String> lines = Files.readAllLines(Paths.get("file.txt"));
+
+// Writing files (Modern approach)
+Files.writeString(Paths.get("output.txt"), "Hello World");
+List<String> data = Arrays.asList("Line 1", "Line 2", "Line 3");
+Files.write(Paths.get("output.txt"), data);
+
+// Reading files (Traditional approach with try-catch)
+try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
+    String line;
+    while ((line = reader.readLine()) != null) {
+        System.out.println(line);
+    }
+} catch (IOException e) {
+    System.out.println("Error reading file: " + e.getMessage());
+}
+
+// Writing files (Traditional approach)
+try (BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"))) {
+    writer.write("Hello World");
+    writer.newLine();
+    writer.write("Second line");
+} catch (IOException e) {
+    System.out.println("Error writing file: " + e.getMessage());
+}
+```
+
+## Common Exception Types
+
+```java
+// RuntimeExceptions (Unchecked - don't need to be declared)
+try {
+    // ArithmeticException - division by zero, invalid operations
+    int result = 10 / 0;
+} catch (ArithmeticException e) {
+    System.out.println("Cannot divide by zero");
+}
+
+try {
+    // NullPointerException - accessing methods/fields on null reference
+    String str = null;
+    int length = str.length();
+} catch (NullPointerException e) {
+    System.out.println("Cannot call methods on null object");
+}
+
+try {
+    // ArrayIndexOutOfBoundsException - accessing invalid array index
+    int[] arr = {1, 2, 3};
+    int value = arr[5];
+} catch (ArrayIndexOutOfBoundsException e) {
+    System.out.println("Array index out of bounds");
+}
+
+try {
+    // NumberFormatException - invalid string to number conversion
+    int num = Integer.parseInt("abc");
+} catch (NumberFormatException e) {
+    System.out.println("Invalid number format");
+}
+
+try {
+    // ClassCastException - invalid type casting
+    Object obj = "Hello";
+    Integer num = (Integer) obj;
+} catch (ClassCastException e) {
+    System.out.println("Invalid type conversion");
+}
+
+try {
+    // StringIndexOutOfBoundsException - invalid string index
+    String str = "Hello";
+    char ch = str.charAt(10);
+} catch (StringIndexOutOfBoundsException e) {
+    System.out.println("String index out of bounds");
+}
+
+// Checked Exceptions (must be handled or declared)
+try {
+    // IOException - Input/Output operations
+    FileReader file = new FileReader("nonexistent.txt");
+} catch (IOException e) {
+    System.out.println("File not found or cannot be read");
+}
+
+try {
+    // ClassNotFoundException - class loading issues
+    Class.forName("com.nonexistent.Class");
+} catch (ClassNotFoundException e) {
+    System.out.println("Class not found");
+}
+
+// Creating custom exceptions
+class CustomException extends Exception {
+    public CustomException(String message) {
+        super(message);
+    }
+}
+
+// Using custom exceptions
+public void validateAge(int age) throws CustomException {
+    if (age < 0) {
+        throw new CustomException("Age cannot be negative");
+    }
+}
+
+// Exception hierarchy understanding
+/*
+Throwable
+├── Error (system errors - rarely handled)
+└── Exception
+    ├── RuntimeException (unchecked)
+    │   ├── NullPointerException
+    │   ├── ArrayIndexOutOfBoundsException
+    │   ├── NumberFormatException
+    │   └── ClassCastException
+    └── Checked Exceptions
+        ├── IOException
+        ├── ClassNotFoundException
+        └── SQLException
+*/
+```
+
 ## Common Utility Methods
 
 ```java
@@ -682,15 +833,4 @@ LocalDate today = LocalDate.now();
 LocalDateTime now = LocalDateTime.now();
 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 String formatted = now.format(formatter);
-
-// File operations basics
-import java.io.*;
-import java.nio.file.*;
-
-// Reading file
-String content = Files.readString(Paths.get("file.txt"));
-List<String> lines = Files.readAllLines(Paths.get("file.txt"));
-
-// Writing file
-Files.writeString(Paths.get("output.txt"), "Hello World");
 ```
