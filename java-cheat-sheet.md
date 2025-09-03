@@ -1,8 +1,3 @@
----
-title: Java Cheat Sheet
-render_with_liquid: false
----
-
 # Java Basics Cheat Sheet 📚
 
 ## Hello World & Setup
@@ -287,7 +282,7 @@ int length = numbers.length; // Get array length
 
 // Multi-dimensional arrays
 int[][] matrix = new int[3][4];          // 3x4 matrix
-int[][] grid = {{1, 2}, {3, 4}, {5, 6}};
+int[][] grid = {% raw %}{{1, 2}, {3, 4}, {5, 6}}{% endraw %};
 
 // Array operations (import java.util.Arrays; required)
 import java.util.Arrays;
