@@ -1,3 +1,8 @@
+---
+title: Java Cheat Sheet
+render_with_liquid: false
+---
+
 # Java Basics Cheat Sheet 📚
 
 ## Hello World & Setup
