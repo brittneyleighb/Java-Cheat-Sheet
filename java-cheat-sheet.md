@@ -1,836 +1,462 @@
-# Java Basics Cheat Sheet 📚
+# Gradle Cheatsheet
 
-## Hello World & Setup
+## What is Gradle?
+Think of Gradle as a **master chef** for your code kitchen. It takes your raw ingredients (source code, dependencies, resources) and follows recipes (build scripts) to create finished dishes (compiled applications, JARs, etc.). Just like a chef coordinates multiple cooking processes, Gradle orchestrates compilation, testing, packaging, and deployment.
 
-```java
-// File name: HelloWorld.java
-public class HelloWorld {
-    public static void main(String[] args) {
-        System.out.println("Hello World");
-    }
-}
-```
+## Core Concepts
 
-### Compilation & Execution
+### Projects & Tasks
+- **Project**: Like a restaurant - it's the entire establishment with all its operations
+- **Task**: Like individual cooking steps - chopping, sautéing, plating
+- **Build Script**: The recipe book (`build.gradle` or `build.gradle.kts`)
+
+### Gradle Wrapper
+Think of it as a **universal remote** - ensures everyone uses the same Gradle version regardless of what's installed locally.
+
 ```bash
-# Compile (creates HelloWorld.class)
-javac HelloWorld.java
+# Use wrapper (recommended)
+./gradlew build      # Unix/Mac
+gradlew.bat build    # Windows
 
-# Run
-java HelloWorld
+# Direct gradle (if installed)
+gradle build
 ```
 
-## Data Types
+## Essential Commands
 
-| Type | Category | Size | Range | Default | Operators |
-|------|----------|------|-------|---------|-----------|
-| `byte` | Integer | 8-bit | -128 to 127 | 0 | + - * / % |
-| `short` | Integer | 16-bit | -32,768 to 32,767 | 0 | + - * / % |
-| `int` | Integer | 32-bit | -2³¹ to 2³¹-1 | 0 | + - * / % |
-| `long` | Integer | 64-bit | -2⁶³ to 2⁶³-1 | 0L | + - * / % |
-| `float` | Floating | 32-bit | ~6-7 decimal digits | 0.0f | + - * / |
-| `double` | Floating | 64-bit | ~15-16 decimal digits | 0.0 | + - * / |
-| `boolean` | Boolean | 1-bit | true or false | false | && \|\| ! |
-| `char` | Character | 16-bit | Unicode characters | '\u0000' | |
-| `String` | Reference | Variable | Sequence of characters | null | + |
+### Basic Operations
+```bash
+# Build the project (like cooking the full meal)
+./gradlew build
 
-## Variable Declaration & Assignment
+# Clean build artifacts (clear the kitchen)
+./gradlew clean
 
-```java
-// Declaration
-int a, b;
-String name;
+# Compile only (prep ingredients)
+./gradlew compileJava
 
-// Assignment
-a = 10;
-name = "Java";
+# Run tests (quality control)
+./gradlew test
 
-// Initialization (declaration + assignment)
-int c = 15;
-double pi = 3.14159;
-boolean isActive = true;
-char grade = 'A';
+# Create executable JAR (package for delivery)
+./gradlew jar
 
-// Constants
-final int MAX_SIZE = 100;
-final double PI = 3.14159;
-
-// Compound assignment operators
-a += 5;  // a = a + 5
-a -= 3;  // a = a - 3
-a *= 2;  // a = a * 2
-a /= 4;  // a = a / 4
-a %= 3;  // a = a % 3
-
-// Increment/Decrement
-int x = 5;
-x++;     // x = 6 (post-increment)
-++x;     // x = 7 (pre-increment)
-x--;     // x = 6 (post-decrement)
---x;     // x = 5 (pre-decrement)
+# Run application (serve the meal)
+./gradlew run
 ```
 
-## Comparison & Logical Operators
+### Information & Debugging
+```bash
+# List all available tasks (see the menu)
+./gradlew tasks
 
-| Operator | Meaning | Example |
-|----------|---------|---------|
-| `==` | Equal to | `a == b` |
-| `!=` | Not equal to | `a != b` |
-| `<` | Less than | `a < b` |
-| `>` | Greater than | `a > b` |
-| `<=` | Less than or equal | `a <= b` |
-| `>=` | Greater than or equal | `a >= b` |
-| `&&` | Logical AND | `(a > 0) && (b > 0)` |
-| `\|\|` | Logical OR | `(a > 0) \|\| (b > 0)` |
-| `!` | Logical NOT | `!(a > 0)` |
+# Show project structure (kitchen layout)
+./gradlew projects
 
-## Input/Output Operations
+# Dependency tree (ingredient supply chain)
+./gradlew dependencies
 
-```java
-import java.util.Scanner;
+# Build with detailed output (verbose cooking commentary)
+./gradlew build --info
 
-// Input
-Scanner scanner = new Scanner(System.in);
-System.out.print("Enter your name: ");
-String name = scanner.nextLine();
-System.out.print("Enter your age: ");
-int age = scanner.nextInt();
-scanner.close();
-
-// Output
-System.out.print("Hello");           // Print without newline
-System.out.println("Hello World");   // Print with newline
-System.out.println();                // Print blank line
-
-// Formatted output
-System.out.printf("Name: %s, Age: %d%n", name, age);
+# Debug build issues
+./gradlew build --debug --stacktrace
 ```
 
-## String Operations
+## Build Script Basics (`build.gradle`)
 
-```java
-String str = "Hello World";
-
-// Common methods
-int length = str.length();                    // 11
-char ch = str.charAt(0);                     // 'H'
-String upper = str.toUpperCase();            // "HELLO WORLD"
-String lower = str.toLowerCase();            // "hello world"
-String sub = str.substring(0, 5);           // "Hello"
-boolean contains = str.contains("World");    // true
-boolean starts = str.startsWith("Hello");   // true
-boolean ends = str.endsWith("World");       // true
-String replaced = str.replace("World", "Java"); // "Hello Java"
-String[] parts = str.split(" ");            // ["Hello", "World"]
-String trimmed = "  Hello  ".trim();        // "Hello"
-
-// String comparison
-str.equals("Hello World");           // true
-str.equalsIgnoreCase("hello world"); // true
-str.compareTo("Hello World");        // 0
-```
-
-## Type Conversion & Parsing
-
-```java
-// Automatic conversions
-int i = 10;
-double d = i;        // int to double (automatic)
-
-// Explicit casting
-double d = 10.5;
-int i = (int) d;     // double to int (explicit) - truncates to 10
-
-// String to primitive
-int num = Integer.parseInt("123");
-double decimal = Double.parseDouble("3.14");
-boolean bool = Boolean.parseBoolean("true");
-long bigNum = Long.parseLong("12345");
-
-// Primitive to String
-String s1 = String.valueOf(123);
-String s2 = Integer.toString(123);
-```
-
-## Math Library
-
-```java
-// Common Math methods
-Math.abs(-5);              // 5 (absolute value)
-Math.max(10, 20);         // 20 (maximum)
-Math.min(10, 20);         // 10 (minimum)
-Math.pow(2, 3);           // 8.0 (2^3)
-Math.sqrt(16);            // 4.0 (square root)
-Math.ceil(3.2);           // 4.0 (round up)
-Math.floor(3.8);          // 3.0 (round down)
-Math.round(3.7);          // 4 (round to nearest)
-Math.random();            // Random double between 0.0 and 1.0
-
-// Trigonometric functions
-Math.sin(Math.PI / 2);    // 1.0
-Math.cos(0);              // 1.0
-Math.tan(Math.PI / 4);    // 1.0
-Math.toRadians(180);      // π (convert degrees to radians)
-Math.toDegrees(Math.PI);  // 180.0 (convert radians to degrees)
-
-// Constants
-Math.PI;                  // 3.141592653589793
-Math.E;                   // 2.718281828459045
-```
-
-## Conditional Statements
-
-```java
-// If statement
-if (age >= 18) {
-    System.out.println("Adult");
+### Minimal Java Project
+```groovy
+// Like declaring what type of restaurant you're running
+plugins {
+    id 'java'
+    id 'application'
 }
 
-// If-else statement
-if (score >= 60) {
-    System.out.println("Pass");
-} else {
-    System.out.println("Fail");
+// Where to find ingredients (dependencies)
+repositories {
+    mavenCentral()
 }
 
-// If-else if ladder
-if (grade >= 90) {
-    System.out.println("A");
-} else if (grade >= 80) {
-    System.out.println("B");
-} else if (grade >= 70) {
-    System.out.println("C");
-} else {
-    System.out.println("F");
+// Your ingredient list
+dependencies {
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    testImplementation 'junit:junit:4.13.2'
 }
 
-// Ternary operator
-String result = (score >= 60) ? "Pass" : "Fail";
-
-// Switch statement
-switch (day) {
-    case 1:
-        dayName = "Monday";
-        break;
-    case 2:
-        dayName = "Tuesday";
-        break;
-    case 3:
-        dayName = "Wednesday";
-        break;
-    default:
-        dayName = "Invalid day";
-        break;
-}
-
-// Enhanced switch (Java 12+)
-String dayType = switch (day) {
-    case 1, 2, 3, 4, 5 -> "Weekday";
-    case 6, 7 -> "Weekend";
-    default -> "Invalid";
-};
-```
-
-## Loop Statements
-
-```java
-// For loop
-for (int i = 0; i < 10; i++) {
-    System.out.println(i);
-}
-
-// Enhanced for loop (for-each)
-int[] numbers = {1, 2, 3, 4, 5};
-for (int number : numbers) {
-    System.out.println(number);
-}
-
-// While loop
-int i = 0;
-while (i < 10) {
-    System.out.println(i);
-    i++;
-}
-
-// Do-while loop
-int j = 0;
-do {
-    System.out.println(j);
-    j++;
-} while (j < 5);
-
-// Loop control
-for (int i = 0; i < 10; i++) {
-    if (i == 3) continue;    // Skip iteration
-    if (i == 8) break;       // Exit loop
-    System.out.println(i);
+// Main dish specification
+application {
+    mainClass = 'com.example.Main'
 }
 ```
 
-## Arrays
+### Kotlin DSL Version (`build.gradle.kts`)
+```kotlin
+plugins {
+    java
+    application
+}
 
-```java
-// Array declaration and initialization
-int[] numbers = new int[5];              // Array of 5 integers
-int[] values = {1, 2, 3, 4, 5};         // Initialize with values
-String[] names = new String[3];
+repositories {
+    mavenCentral()
+}
 
-// Accessing elements
-numbers[0] = 10;        // Set first element
-int first = numbers[0]; // Get first element
-int length = numbers.length; // Get array length
+dependencies {
+    implementation("org.apache.commons:commons-lang3:3.12.0")
+    testImplementation("junit:junit:4.13.2")
+}
 
-// Multi-dimensional arrays
-int[][] matrix = new int[3][4];          // 3x4 matrix
-int[][] grid = {% raw %}{{1, 2}, {3, 4}, {5, 6}}{% endraw %};
-
-// Array operations (import java.util.Arrays; required)
-import java.util.Arrays;
-
-int[] original = {1, 2, 3};
-int[] copy = Arrays.copyOf(original, original.length);
-Arrays.sort(numbers);                    // Sort array
-Arrays.fill(numbers, 0);                 // Fill with value
-String str = Arrays.toString(numbers);   // Convert to string
+application {
+    mainClass.set("com.example.Main")
+}
 ```
 
-## Exception Handling
+## Dependency Management
 
-```java
-// Basic try-catch
-try {
-    int result = 10 / 0;
-} catch (ArithmeticException e) {
-    System.out.println("Cannot divide by zero");
+### Dependency Configurations
+Think of these as different **supply contracts** with vendors:
+
+```groovy
+dependencies {
+    // Runtime ingredient (needed for cooking and serving)
+    implementation 'org.springframework:spring-core:5.3.21'
+    
+    // Cooking tool only (needed for prep, not serving)
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    
+    // Serving requirement (runtime only)
+    runtimeOnly 'mysql:mysql-connector-java:8.0.29'
+    
+    // Quality testing supplies
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    
+    // Development tools (like having a dishwasher in the kitchen)
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+}
+```
+
+### Version Management
+```groovy
+// Version catalog (like a price list from suppliers)
+ext {
+    springVersion = '5.3.21'
+    junitVersion = '5.8.2'
 }
 
-// Multiple catch blocks
-try {
-    int[] arr = new int[5];
-    arr[10] = 100;
-} catch (ArrayIndexOutOfBoundsException e) {
-    System.out.println("Array index out of bounds");
-} catch (Exception e) {
-    System.out.println("General exception: " + e.getMessage());
+dependencies {
+    implementation "org.springframework:spring-core:$springVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter:$junitVersion"
+}
+```
+
+## Task Management
+
+### Custom Tasks
+```groovy
+// Creating your own cooking procedure
+task customClean(type: Delete) {
+    description = 'Custom cleanup procedure'
+    delete 'build/custom'
 }
 
-// Try-catch-finally
-try {
-    // Risky code
-} catch (Exception e) {
-    // Handle exception
-} finally {
-    // Always executes
-    System.out.println("Cleanup code");
-}
-
-// Throwing exceptions
-public void checkAge(int age) throws IllegalArgumentException {
-    if (age < 0) {
-        throw new IllegalArgumentException("Age cannot be negative");
+// Task that depends on others (like needing chopped onions before sautéing)
+task packageApp(dependsOn: ['build', 'customClean']) {
+    doLast {
+        println 'Packaging application...'
+        // Custom packaging logic
     }
 }
 ```
 
-## Object-Oriented Programming
+### Task Execution Control
+```bash
+# Run specific task
+./gradlew customClean
 
-### Classes and Objects
+# Run multiple tasks in sequence
+./gradlew clean build test
 
-```java
-public class Person {
-    // Instance variables (fields)
-    private String name;
-    private int age;
-    
-    // Static variable (class variable)
-    private static int personCount = 0;
-    
-    // Constructor
-    public Person(String name, int age) {
-        this.name = name;
-        this.age = age;
-        personCount++;
-    }
-    
-    // Default constructor
-    public Person() {
-        this("Unknown", 0);
-    }
-    
-    // Instance methods
-    public String getName() {
-        return name;
-    }
-    
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    public int getAge() {
-        return age;
-    }
-    
-    public void setAge(int age) {
-        this.age = age;
-    }
-    
-    // Static method
-    public static int getPersonCount() {
-        return personCount;
-    }
-    
-    // Override toString method
-    @Override
-    public String toString() {
-        return "Person{name='" + name + "', age=" + age + "}";
-    }
-}
+# Skip tests (skip quality control - use carefully!)
+./gradlew build -x test
 
-// Creating and using objects
-Person person1 = new Person("Alice", 25);
-Person person2 = new Person("Bob", 30);
-
-System.out.println(person1.getName()); // Alice
-person1.setAge(26);
-System.out.println(Person.getPersonCount()); // 2
+# Continue on failure (keep cooking even if one dish burns)
+./gradlew build --continue
 ```
 
-### Inheritance
+## Multi-Project Builds
 
-```java
-// Parent class
-public class Animal {
-    protected String name;
-    protected int age;
-    
-    public Animal(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
-    
-    public void makeSound() {
-        System.out.println("Animal makes a sound");
-    }
-    
-    public void eat() {
-        System.out.println(name + " is eating");
-    }
-}
+Think of this as a **restaurant chain** - multiple locations (subprojects) with shared resources:
 
-// Child class
-public class Dog extends Animal {
-    private String breed;
-    
-    public Dog(String name, int age, String breed) {
-        super(name, age);  // Call parent constructor
-        this.breed = breed;
-    }
-    
-    @Override
-    public void makeSound() {
-        System.out.println(name + " barks: Woof!");
-    }
-    
-    public void wagTail() {
-        System.out.println(name + " wags tail");
-    }
-}
-
-// Another child class
-public class Cat extends Animal {
-    private String breed;
-    
-    public Cat(String name, int age, String breed) {
-        super(name, age);
-        this.breed = breed;
-    }
-    
-    @Override
-    public void makeSound() {
-        System.out.println(name + " meows: Meow!");
-    }
-    
-    public void purr() {
-        System.out.println(name + " purrs contentedly");
-    }
-}
-
-// Usage
-Dog myDog = new Dog("Buddy", 3, "Golden Retriever");
-myDog.makeSound(); // Buddy barks: Woof! (overridden method)
-myDog.eat();       // Buddy is eating (inherited method)
-myDog.wagTail();   // Buddy wags tail (own method)
+### Root `settings.gradle`
+```groovy
+rootProject.name = 'restaurant-chain'
+include 'common', 'web-app', 'mobile-app'
 ```
 
-### Polymorphism
-
-```java
-// Method Overloading (Compile-time polymorphism)
-public class Calculator {
-    public int add(int a, int b) {
-        return a + b;
-    }
-    
-    public double add(double a, double b) {
-        return a + b;
-    }
-    
-    public int add(int a, int b, int c) {
-        return a + b + c;
+### Root `build.gradle`
+```groovy
+// Chain-wide policies
+allprojects {
+    repositories {
+        mavenCentral()
     }
 }
 
-// Method Overriding (Runtime polymorphism)
-Animal[] animals = {
-    new Dog("Buddy", 3, "Labrador"),
-    new Cat("Whiskers", 2, "Persian"),
-    new Animal("Generic", 1)
-};
-
-for (Animal animal : animals) {
-    animal.makeSound(); // Calls appropriate overridden method
-}
-```
-
-### Abstraction
-
-```java
-// Abstract class
-public abstract class Shape {
-    protected String color;
+// Policies for all locations except headquarters
+subprojects {
+    apply plugin: 'java'
     
-    public Shape(String color) {
-        this.color = color;
-    }
-    
-    // Abstract method (must be implemented by subclasses)
-    public abstract double getArea();
-    
-    // Concrete method
-    public void printColor() {
-        System.out.println("Color: " + color);
-    }
-}
-
-// Concrete class
-public class Circle extends Shape {
-    private double radius;
-    
-    public Circle(String color, double radius) {
-        super(color);
-        this.radius = radius;
-    }
-    
-    @Override
-    public double getArea() {
-        return Math.PI * radius * radius;
-    }
-}
-
-// Interface
-public interface Drawable {
-    void draw();           // Abstract method (public by default)
-    
-    default void print() { // Default method (Java 8+)
-        System.out.println("Printing...");
-    }
-    
-    static void info() {   // Static method (Java 8+)
-        System.out.println("Drawable interface");
-    }
-}
-
-// Implementing interface
-public class Rectangle implements Drawable {
-    @Override
-    public void draw() {
-        System.out.println("Drawing a rectangle");
+    dependencies {
+        testImplementation 'junit:junit:4.13.2'
     }
 }
 ```
 
-### Encapsulation
+### Subproject Dependencies
+```groovy
+// In web-app/build.gradle
+dependencies {
+    implementation project(':common')  // Use shared recipes
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+}
+```
 
-```java
-public class BankAccount {
-    private double balance;      // Private field
-    private String accountNumber;
-    
-    public BankAccount(String accountNumber, double initialBalance) {
-        this.accountNumber = accountNumber;
-        this.balance = initialBalance;
-    }
-    
-    // Getter methods
-    public double getBalance() {
-        return balance;
-    }
-    
-    public String getAccountNumber() {
-        return accountNumber;
-    }
-    
-    // Controlled access through methods
-    public boolean deposit(double amount) {
-        if (amount > 0) {
-            balance += amount;
-            return true;
+## Advanced Features
+
+### Build Types & Flavors
+```groovy
+// Like having different menu options (debug/release)
+android {
+    buildTypes {
+        debug {
+            debuggable true
+            // Extra logging ingredients
         }
-        return false;
+        release {
+            minifyEnabled true
+            // Optimized for production serving
+        }
+    }
+}
+```
+
+### Custom Source Sets
+```groovy
+// Different ingredient storage areas
+sourceSets {
+    integration {
+        java.srcDir 'src/integration/java'
+        resources.srcDir 'src/integration/resources'
+    }
+}
+```
+
+### Gradle Properties
+
+**`gradle.properties`** (like restaurant settings):
+```properties
+# JVM settings (kitchen equipment specs)
+org.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=512m
+
+# Build optimization (parallel cooking)
+org.gradle.parallel=true
+org.gradle.caching=true
+
+# Custom properties
+version=1.2.3
+springVersion=5.3.21
+```
+
+## Performance Optimization
+
+### Build Cache
+```bash
+# Enable build cache (like having prep work done ahead)
+./gradlew build --build-cache
+```
+
+### Parallel Execution
+```properties
+# In gradle.properties
+org.gradle.parallel=true
+org.gradle.workers.max=4
+```
+
+### Daemon Management
+```bash
+# Start daemon (keep the kitchen staff ready)
+./gradlew --daemon
+
+# Stop daemon (send staff home)
+./gradlew --stop
+
+# Check daemon status
+./gradlew --status
+```
+
+## Testing
+
+### Test Execution
+```bash
+# Run all tests
+./gradlew test
+
+# Run specific test class
+./gradlew test --tests com.example.MyTest
+
+# Run tests matching pattern
+./gradlew test --tests "*Integration*"
+
+# Generate test report
+./gradlew test jacocoTestReport
+```
+
+### Test Configuration
+```groovy
+test {
+    useJUnitPlatform()  // Use modern testing framework
+    
+    // Test execution settings (kitchen testing protocols)
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
     }
     
-    public boolean withdraw(double amount) {
-        if (amount > 0 && amount <= balance) {
-            balance -= amount;
-            return true;
+    // Parallel test execution
+    maxParallelForks = Runtime.runtime.availableProcessors() / 2
+}
+```
+
+## Publishing & Distribution
+
+### Maven Publishing
+```groovy
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            
+            pom {
+                name = 'My Library'
+                description = 'A concise description of my library'
+                url = 'http://www.example.com/library'
+                
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                
+                developers {
+                    developer {
+                        id = 'johndoe'
+                        name = 'John Doe'
+                        email = 'john.doe@example.com'
+                    }
+                }
+                
+                scm {
+                    connection = 'scm:git:git://example.com/my-library.git'
+                    developerConnection = 'scm:git:ssh://example.com/my-library.git'
+                    url = 'http://example.com/my-library'
+                }
+            }
         }
-        return false;
+    }
+    
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/username/repository")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+            }
+        }
     }
 }
 ```
 
-## Access Modifiers
-
-| Modifier | Class | Package | Subclass | World |
-|----------|-------|---------|----------|-------|
-| `public` | ✓ | ✓ | ✓ | ✓ |
-| `protected` | ✓ | ✓ | ✓ | ✗ |
-| default (no modifier) | ✓ | ✓ | ✗ | ✗ |
-| `private` | ✓ | ✗ | ✗ | ✗ |
-
-## Non-Access Modifiers
-
-- `static`: Belongs to class rather than instance
-- `final`: Cannot be modified/overridden
-- `abstract`: Must be implemented by subclass
-- `synchronized`: Thread-safe access
-- `volatile`: Variable may be changed by multiple threads
-- `transient`: Skip during serialization
-
-## Collections Framework Basics
-
-```java
-import java.util.*;
-
-// ArrayList - Dynamic array
-List<String> list = new ArrayList<>();
-list.add("Apple");
-list.add("Banana");
-list.add(1, "Orange");  // Insert at index
-String item = list.get(0); // Get by index
-list.remove("Banana");
-list.size();
-
-// HashMap - Key-value pairs
-Map<String, Integer> map = new HashMap<>();
-map.put("Alice", 25);
-map.put("Bob", 30);
-int age = map.get("Alice");
-map.containsKey("Alice");
-map.keySet();   // Get all keys
-map.values();   // Get all values
-
-// HashSet - Unique elements
-Set<String> set = new HashSet<>();
-set.add("Red");
-set.add("Blue");
-set.add("Red");  // Duplicate, won't be added
-set.contains("Red");
-set.size(); // 2
-
-// Enhanced for loops with collections
-for (String item : list) {
-    System.out.println(item);
-}
-
-for (Map.Entry<String, Integer> entry : map.entrySet()) {
-    System.out.println(entry.getKey() + ": " + entry.getValue());
-}
-```
-
-## Packages and Imports
-
-```java
-// Package declaration (first line of file)
-package com.company.myapp;
-
-// Import statements
-import java.util.Scanner;           // Import specific class
-import java.util.*;                 // Import all classes from package
-import static java.lang.Math.PI;    // Static import
-
-// Using imported classes
-Scanner scanner = new Scanner(System.in);
-List<String> list = new ArrayList<>();
-double circumference = 2 * PI * radius; // Static import
-```
-
-## File I/O Operations
-
-```java
-import java.io.*;
-import java.nio.file.*;
-import java.util.List;
-
-// File class - Working with files and directories
-File file = new File("example.txt");
-File directory = new File("myFolder");
-
-// File information methods
-boolean exists = file.exists();              // Check if file exists
-boolean isFile = file.isFile();             // Check if it's a file
-boolean isDirectory = file.isDirectory();    // Check if it's a directory
-String fileName = file.getName();           // Get file name
-String absolutePath = file.getAbsolutePath(); // Get full path
-long fileSize = file.length();              // Get file size in bytes
-long lastModified = file.lastModified();    // Last modification time
-
-// File operations
-boolean created = file.createNewFile();     // Create new file
-boolean deleted = file.delete();            // Delete file
-boolean renamed = file.renameTo(new File("newName.txt"));
-File[] files = directory.listFiles();       // List files in directory
-
-// Reading files (Modern approach - Java 8+)
-String content = Files.readString(Paths.get("file.txt"));
-List<String> lines = Files.readAllLines(Paths.get("file.txt"));
-
-// Writing files (Modern approach)
-Files.writeString(Paths.get("output.txt"), "Hello World");
-List<String> data = Arrays.asList("Line 1", "Line 2", "Line 3");
-Files.write(Paths.get("output.txt"), data);
-
-// Reading files (Traditional approach with try-catch)
-try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
-    String line;
-    while ((line = reader.readLine()) != null) {
-        System.out.println(line);
-    }
-} catch (IOException e) {
-    System.out.println("Error reading file: " + e.getMessage());
-}
-
-// Writing files (Traditional approach)
-try (BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"))) {
-    writer.write("Hello World");
-    writer.newLine();
-    writer.write("Second line");
-} catch (IOException e) {
-    System.out.println("Error writing file: " + e.getMessage());
-}
-```
-
-## Common Exception Types
-
-```java
-// RuntimeExceptions (Unchecked - don't need to be declared)
-try {
-    // ArithmeticException - division by zero, invalid operations
-    int result = 10 / 0;
-} catch (ArithmeticException e) {
-    System.out.println("Cannot divide by zero");
-}
-
-try {
-    // NullPointerException - accessing methods/fields on null reference
-    String str = null;
-    int length = str.length();
-} catch (NullPointerException e) {
-    System.out.println("Cannot call methods on null object");
-}
-
-try {
-    // ArrayIndexOutOfBoundsException - accessing invalid array index
-    int[] arr = {1, 2, 3};
-    int value = arr[5];
-} catch (ArrayIndexOutOfBoundsException e) {
-    System.out.println("Array index out of bounds");
-}
-
-try {
-    // NumberFormatException - invalid string to number conversion
-    int num = Integer.parseInt("abc");
-} catch (NumberFormatException e) {
-    System.out.println("Invalid number format");
-}
-
-try {
-    // ClassCastException - invalid type casting
-    Object obj = "Hello";
-    Integer num = (Integer) obj;
-} catch (ClassCastException e) {
-    System.out.println("Invalid type conversion");
-}
-
-try {
-    // StringIndexOutOfBoundsException - invalid string index
-    String str = "Hello";
-    char ch = str.charAt(10);
-} catch (StringIndexOutOfBoundsException e) {
-    System.out.println("String index out of bounds");
-}
-
-// Checked Exceptions (must be handled or declared)
-try {
-    // IOException - Input/Output operations
-    FileReader file = new FileReader("nonexistent.txt");
-} catch (IOException e) {
-    System.out.println("File not found or cannot be read");
-}
-
-try {
-    // ClassNotFoundException - class loading issues
-    Class.forName("com.nonexistent.Class");
-} catch (ClassNotFoundException e) {
-    System.out.println("Class not found");
-}
-
-// Creating custom exceptions
-class CustomException extends Exception {
-    public CustomException(String message) {
-        super(message);
+### JAR Configuration
+```groovy
+jar {
+    archiveBaseName = 'my-app'
+    archiveVersion = '1.0.0'
+    
+    // Fat JAR (complete meal kit)
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
+```
 
-// Using custom exceptions
-public void validateAge(int age) throws CustomException {
-    if (age < 0) {
-        throw new CustomException("Age cannot be negative");
-    }
+### Application Plugin
+```groovy
+application {
+    mainClass = 'com.example.Main'
+    applicationDefaultJvmArgs = ['-Xmx1g']
 }
 
-// Exception hierarchy understanding
-/*
-Throwable
-├── Error (system errors - rarely handled)
-└── Exception
-    ├── RuntimeException (unchecked)
-    │   ├── NullPointerException
-    │   ├── ArrayIndexOutOfBoundsException
-    │   ├── NumberFormatException
-    │   └── ClassCastException
-    └── Checked Exceptions
-        ├── IOException
-        ├── ClassNotFoundException
-        └── SQLException
-*/
+// Creates distribution packages
+./gradlew distZip  // ZIP package
+./gradlew distTar  // TAR package
 ```
 
-## Common Utility Methods
+## Troubleshooting
 
-```java
-// Random numbers
-Random random = new Random();
-int randomInt = random.nextInt(10);      // 0-9
-double randomDouble = random.nextDouble(); // 0.0-1.0
+### Common Issues & Solutions
+```bash
+# Clear Gradle cache (reset kitchen)
+rm -rf ~/.gradle/caches/
 
-// Date and Time (Java 8+)
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+# Force refresh dependencies (get fresh ingredients)
+./gradlew build --refresh-dependencies
 
-LocalDate today = LocalDate.now();
-LocalDateTime now = LocalDateTime.now();
-DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-String formatted = now.format(formatter);
+# Verbose output for debugging
+./gradlew build --info --stacktrace
+
+# Check for dependency conflicts
+./gradlew dependencyInsight --dependency spring-core
 ```
+
+### Build Debugging
+```groovy
+// Add to build.gradle for debugging
+gradle.buildFinished { buildResult ->
+    println "Build finished: ${buildResult.failure ? 'FAILED' : 'SUCCESS'}"
+}
+```
+
+## Quick Reference
+
+### Most Used Commands
+```bash
+./gradlew clean build    # Full clean build
+./gradlew test          # Run tests
+./gradlew tasks         # List available tasks
+./gradlew dependencies  # Show dependency tree
+./gradlew build -x test # Build without tests
+./gradlew run          # Run application
+```
+
+### Key Files
+- `build.gradle` / `build.gradle.kts` - Main build script (recipe book)
+- `settings.gradle` - Project structure (restaurant layout)
+- `gradle.properties` - Configuration (kitchen settings)
+- `gradlew` / `gradlew.bat` - Gradle wrapper (universal remote)
+
+### Best Practices
+1. **Always use the wrapper** (`./gradlew`) for consistency
+2. **Enable build cache** for faster builds
+3. **Use specific dependency versions** to avoid surprises
+4. **Keep build scripts clean** and well-commented
+5. **Use multi-project structure** for complex applications
+6. **Run tests regularly** - don't skip quality control!
+
+---
+
+*Remember: Gradle is like having a master chef who never gets tired, never forgets a step, and can coordinate dozens of cooking processes simultaneously. Once you set up the recipes (build scripts), it handles all the complex coordination for you!*
